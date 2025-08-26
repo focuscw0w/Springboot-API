@@ -1,4 +1,4 @@
-# Spring Boot zadanie starter pack
+# Springboot REST API
 
 ### System Description
 The application server allows managing products and orders.
