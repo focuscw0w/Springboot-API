@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity(name = "products")
 @Getter
@@ -12,10 +13,14 @@ import lombok.NoArgsConstructor;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
+    @Setter
     private String name;
+
+    @Setter
     private String description;
+
     private int amount;
     private double price;
 
@@ -25,5 +30,4 @@ public class Product {
         this.amount = amount;
         this.price = price;
     }
-
 }

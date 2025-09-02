@@ -1,6 +1,10 @@
 package sk.streetofcode.productordermanagement.product;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+import sk.streetofcode.productordermanagement.product.requests.AddProductRequest;
+import sk.streetofcode.productordermanagement.product.requests.EditProductRequest;
 
 @Service
 public class ProductService implements IProductService {
@@ -11,13 +15,14 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public Product getProductById(Long id) {
-        return null;
+    public Product getProductById(long id) {
+        return productRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     @Override
     public Iterable<Product> getAllProducts() {
-        return null;
+        return productRepository.findAll();
     }
 
     @Override
@@ -25,7 +30,7 @@ public class ProductService implements IProductService {
         return 0;
     }
 
-    public Product addProduct(ProductRequestDTO request) {
+    public Product addProduct(AddProductRequest request) {
         final Product product = new Product(
                 request.getName(),
                 request.getDescription(),
@@ -46,8 +51,13 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public Product updateProduct(Long id, ProductRequestDTO request) {
-        return null;
+    public Product updateProduct(Long id, EditProductRequest request) {
+        Product existingProduct = this.getProductById(id);
+
+        existingProduct.setName(request.getName());
+        existingProduct.setDescription(request.getDescription());
+
+        return productRepository.save(existingProduct);
     }
 
     @Override
