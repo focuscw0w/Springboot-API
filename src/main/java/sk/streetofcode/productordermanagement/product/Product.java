@@ -1,21 +1,17 @@
 package sk.streetofcode.productordermanagement.product;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Entity
+@Entity(name = "products")
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "products")
 public class Product {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
@@ -29,4 +25,5 @@ public class Product {
         this.amount = amount;
         this.price = price;
     }
+
 }

@@ -1,5 +1,6 @@
 package sk.streetofcode.productordermanagement.product;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,9 +13,8 @@ public class ProductController {
         this.productService = productService;
     }
 
-    // Add product
     @PostMapping("/product")
-    public Product addProduct(@RequestBody ProductRequestDTO request) {
-       return productService.addProduct(request);
+    ResponseEntity<Product> addProduct(@RequestBody ProductRequestDTO request) {
+       return ResponseEntity.ok(productService.addProduct(request));
     }
 }
