@@ -1,4 +1,4 @@
-package sk.streetofcode.productordermanagement.product;
+package sk.streetofcode.productordermanagement.product.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Product {
+public class ProductEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -26,7 +26,7 @@ public class Product {
 
     private double price;
 
-    public Product(String name, String description, int amount, double price) {
+    public ProductEntity(String name, String description, int amount, double price) {
         this.name = name;
         this.description = description;
         this.amount = amount;

@@ -1,4 +1,4 @@
-package sk.streetofcode.productordermanagement.product;
+package sk.streetofcode.productordermanagement.product.api.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,6 +9,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Amount {
+public class AmountDTO {
     private long amount;
 }

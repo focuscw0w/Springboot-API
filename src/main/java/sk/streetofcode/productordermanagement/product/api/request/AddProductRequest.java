@@ -1,4 +1,4 @@
-package sk.streetofcode.productordermanagement.product.request;
+package sk.streetofcode.productordermanagement.product.api.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
