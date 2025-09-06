@@ -21,7 +21,9 @@ public class Product {
     @Setter
     private String description;
 
-    private int amount;
+    @Setter
+    private long amount;
+
     private double price;
 
     public Product(String name, String description, int amount, double price) {

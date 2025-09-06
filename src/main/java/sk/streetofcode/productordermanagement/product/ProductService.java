@@ -3,8 +3,8 @@ package sk.streetofcode.productordermanagement.product;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-import sk.streetofcode.productordermanagement.product.requests.AddProductRequest;
-import sk.streetofcode.productordermanagement.product.requests.EditProductRequest;
+import sk.streetofcode.productordermanagement.product.request.AddProductRequest;
+import sk.streetofcode.productordermanagement.product.request.EditProductRequest;
 
 @Service
 public class ProductService implements IProductService {
@@ -26,8 +26,9 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public int getProductAmount(Long id) {
-        return 0;
+    public Amount getProductAmount(long id) {
+        Product product = this.getProductById(id);
+        return new Amount(product.getAmount());
     }
 
     public Product addProduct(AddProductRequest request) {
@@ -46,22 +47,28 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public int addProductAmount(Long id, int amount) {
-        return 0;
+    public long addProductAmount(long id, long amount) {
+        Product product = this.getProductById(id);
+        product.setAmount(product.getAmount() + amount);
+
+        productRepository.save(product);
+
+        return product.getAmount();
     }
 
     @Override
-    public Product updateProduct(Long id, EditProductRequest request) {
-        Product existingProduct = this.getProductById(id);
+    public Product updateProduct(long id, EditProductRequest request) {
+        Product product = this.getProductById(id);
 
-        existingProduct.setName(request.getName());
-        existingProduct.setDescription(request.getDescription());
+        product.setName(request.getName());
+        product.setDescription(request.getDescription());
 
-        return productRepository.save(existingProduct);
+        return productRepository.save(product);
     }
 
     @Override
-    public void deleteProduct(Long id) {
-
+    public void deleteProduct(long id) {
+        Product product = this.getProductById(id);
+        productRepository.delete(product);
     }
 }

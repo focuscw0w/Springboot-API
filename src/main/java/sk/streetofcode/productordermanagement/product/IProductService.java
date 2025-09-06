@@ -1,23 +1,21 @@
 package sk.streetofcode.productordermanagement.product;
 
-import sk.streetofcode.productordermanagement.product.requests.AddProductRequest;
-import sk.streetofcode.productordermanagement.product.requests.EditProductRequest;
-
-import java.util.Optional;
+import sk.streetofcode.productordermanagement.product.request.AddProductRequest;
+import sk.streetofcode.productordermanagement.product.request.EditProductRequest;
 
 public interface IProductService {
     // GET
     public Product getProductById(long id);
     public Iterable<Product> getAllProducts();
-    public int getProductAmount(Long id);
+    public Amount getProductAmount(long id);
 
     // POST
     public Product addProduct(AddProductRequest request);
-    public int addProductAmount(Long id, int amount);
+    public long addProductAmount(long id, long amount);
 
     // PUT
-    public Product updateProduct(Long id, EditProductRequest request);
+    public Product updateProduct(long id, EditProductRequest request);
 
     // DELETE
-    public void deleteProduct(Long id);
+    public void deleteProduct(long id);
 }

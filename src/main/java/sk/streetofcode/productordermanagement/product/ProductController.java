@@ -1,16 +1,14 @@
 package sk.streetofcode.productordermanagement.product;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
-import sk.streetofcode.productordermanagement.product.requests.AddProductRequest;
-import sk.streetofcode.productordermanagement.product.requests.EditProductRequest;
+import sk.streetofcode.productordermanagement.product.request.AddProductAmountRequest;
+import sk.streetofcode.productordermanagement.product.request.AddProductRequest;
+import sk.streetofcode.productordermanagement.product.request.EditProductRequest;
 
 import java.util.List;
 
-@Slf4j
 @RestController
 public class ProductController {
     private final ProductService productService;
@@ -25,6 +23,11 @@ public class ProductController {
                body(productService.addProduct(request));
     }
 
+    @PostMapping("/product/{id}/amount")
+    ResponseEntity<Amount> addProductAmount(@PathVariable long id, @RequestBody AddProductAmountRequest request) {
+        return ResponseEntity.ok(new Amount(productService.addProductAmount(id, request.getAmount())));
+    }
+
     @GetMapping("/product/{id}")
     ResponseEntity<Product> getProduct(@PathVariable long id) {
         return ResponseEntity.ok(productService.getProductById(id));
@@ -35,8 +38,19 @@ public class ProductController {
         return ResponseEntity.ok((List<Product>) productService.getAllProducts());
     }
 
+    @GetMapping("/product/{id}/amount")
+    ResponseEntity<Amount> getProductAmount(@PathVariable long id) {
+        return ResponseEntity.ok(productService.getProductAmount(id));
+    }
+
     @PutMapping("/product/{id}")
     ResponseEntity<Product> updateProduct(@PathVariable long id, @RequestBody EditProductRequest request) {
         return ResponseEntity.ok(productService.updateProduct(id, request));
+    }
+
+    @DeleteMapping("/product/{id}")
+    ResponseEntity<Void> deleteProduct(@PathVariable long id) {
+        productService.deleteProduct(id);
+        return ResponseEntity.ok().build();
     }
 }
