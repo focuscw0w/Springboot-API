@@ -1,4 +1,4 @@
-package sk.streetofcode.productordermanagement.product.api.exception;
+package sk.streetofcode.productordermanagement.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

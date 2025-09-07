@@ -589,6 +589,7 @@ public class IntegrationTests {
 
     @Getter
     @Setter
+
     @EqualsAndHashCode
     private static class TestOrderResponse {
         private long id;

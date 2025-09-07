@@ -4,8 +4,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import sk.streetofcode.productordermanagement.product.api.dto.AmountDTO;
 import sk.streetofcode.productordermanagement.product.api.dto.ProductDTO;
-import sk.streetofcode.productordermanagement.product.api.exception.InternalErrorException;
-import sk.streetofcode.productordermanagement.product.api.exception.ResourceNotFoundException;
+import sk.streetofcode.productordermanagement.exception.InternalErrorException;
+import sk.streetofcode.productordermanagement.exception.ResourceNotFoundException;
 import sk.streetofcode.productordermanagement.product.entity.ProductEntity;
 import sk.streetofcode.productordermanagement.product.repository.ProductRepository;
 import sk.streetofcode.productordermanagement.product.api.request.AddProductRequest;
@@ -25,7 +25,7 @@ public class ProductServiceImpl implements ProductService {
         this.modelMapper = modelMapper;
     }
 
-    public ProductEntity getProductEntityById(long id) {
+    private ProductEntity getProductEntityById(long id) {
         return productRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Product with id " + id + " not found"));
     }
