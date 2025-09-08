@@ -20,4 +20,7 @@ public interface ProductService {
 
     // DELETE
     void deleteProduct(long id);
+
+    // Helper
+    void decreaseProductAmount(long productId, long amount);
 }

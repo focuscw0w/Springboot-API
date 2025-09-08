@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import sk.streetofcode.productordermanagement.order.api.dto.OrderEntry;
+import sk.streetofcode.productordermanagement.order.api.dto.ShoppingItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,7 @@ public class OrderEntity {
     private Long id;
 
     @ElementCollection
-    private List<OrderEntry> shoppingList = new ArrayList<>();
+    private List<ShoppingItem> shoppingList = new ArrayList<>();
 
     boolean paid;
 }

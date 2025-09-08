@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderEntry {
+public class ShoppingItem {
     Long productId;
     Long amount;
 }

@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sk.streetofcode.productordermanagement.order.api.dto.OrderDTO;
+import sk.streetofcode.productordermanagement.order.api.request.AddToOrderRequest;
 import sk.streetofcode.productordermanagement.order.service.OrderService;
 
 @RestController
@@ -22,6 +23,11 @@ public class OrderController {
     @PostMapping("/order/{id}/pay")
     ResponseEntity<String> payForOrder(@PathVariable long id) {
         return ResponseEntity.ok(orderService.payForOrder(id));
+    }
+
+    @PostMapping("/order/{id}/add")
+    ResponseEntity<OrderDTO> addToOrder(@PathVariable long id, @RequestBody AddToOrderRequest request) {
+        return ResponseEntity.ok(orderService.addProductToOrder(id, request));
     }
 
     @GetMapping("/order/{id}")

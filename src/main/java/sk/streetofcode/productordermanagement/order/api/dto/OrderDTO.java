@@ -13,6 +13,6 @@ import java.util.List;
 @AllArgsConstructor
 public class OrderDTO {
     long id;
-    List<OrderEntry> shoppingList;
+    List<ShoppingItem> shoppingList;
     boolean paid;
 }

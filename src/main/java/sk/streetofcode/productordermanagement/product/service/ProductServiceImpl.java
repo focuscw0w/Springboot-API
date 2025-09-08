@@ -2,9 +2,9 @@ package sk.streetofcode.productordermanagement.product.service;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import sk.streetofcode.productordermanagement.exception.BadRequestException;
 import sk.streetofcode.productordermanagement.product.api.dto.AmountDTO;
 import sk.streetofcode.productordermanagement.product.api.dto.ProductDTO;
-import sk.streetofcode.productordermanagement.exception.InternalErrorException;
 import sk.streetofcode.productordermanagement.exception.ResourceNotFoundException;
 import sk.streetofcode.productordermanagement.product.entity.ProductEntity;
 import sk.streetofcode.productordermanagement.product.repository.ProductRepository;
@@ -30,6 +30,16 @@ public class ProductServiceImpl implements ProductService {
                 .orElseThrow(() -> new ResourceNotFoundException("Product with id " + id + " not found"));
     }
 
+    public void decreaseProductAmount(long id, long amount) {
+        ProductEntity product = this.getProductEntityById(id);
+        if (product.getAmount() < amount) {
+            throw new BadRequestException("Not enough product in stock");
+        }
+
+        product.setAmount(product.getAmount() - amount);
+        productRepository.save(product);
+    }
+
     @Override
     public ProductDTO getProductById(long id) {
         ProductEntity productEntity = this.getProductEntityById(id);
@@ -39,9 +49,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Iterable<ProductDTO> getAllProducts() {
-        List<ProductEntity> productEntities = this.productRepository.findAll();
+        List<ProductEntity> products = this.productRepository.findAll();
 
-        return productEntities.stream()
+        return products.stream()
                     .map(productEntity -> this.modelMapper.map(productEntity, ProductDTO.class))
                     .toList();
 
@@ -49,8 +59,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public AmountDTO getProductAmount(long id) {
-        ProductEntity productEntity = this.getProductEntityById(id);
-        return this.modelMapper.map(productEntity, AmountDTO.class);
+        ProductEntity product = this.getProductEntityById(id);
+        return this.modelMapper.map(product, AmountDTO.class);
     }
 
     public ProductDTO addProduct(AddProductRequest request) {
@@ -61,28 +71,28 @@ public class ProductServiceImpl implements ProductService {
                 request.getPrice()
         );
 
-        ProductEntity savedProductEntity = productRepository.save(product);
-        return this.modelMapper.map(savedProductEntity, ProductDTO.class);
+        ProductEntity savedProduct = productRepository.save(product);
+        return this.modelMapper.map(savedProduct, ProductDTO.class);
     }
 
     @Override
     public AmountDTO addProductAmount(long id, long amount) {
-        ProductEntity productEntity = this.getProductEntityById(id);
-        productEntity.setAmount(productEntity.getAmount() + amount);
+        ProductEntity product = this.getProductEntityById(id);
+        product.setAmount(product.getAmount() + amount);
 
-        ProductEntity savedProductEntity = productRepository.save(productEntity);
+        ProductEntity savedProductEntity = productRepository.save(product);
         return new AmountDTO(savedProductEntity.getAmount());
     }
 
     @Override
     public ProductDTO updateProduct(long id, UpdateProductRequest request) {
-        ProductEntity productEntity = this.getProductEntityById(id);
+        ProductEntity product = this.getProductEntityById(id);
 
-        productEntity.setName(request.getName());
-        productEntity.setDescription(request.getDescription());
+        product.setName(request.getName());
+        product.setDescription(request.getDescription());
 
-        ProductEntity savedProductEntity = productRepository.save(productEntity);
-        return this.modelMapper.map(savedProductEntity, ProductDTO.class);
+        ProductEntity savedProduct = productRepository.save(product);
+        return this.modelMapper.map(savedProduct, ProductDTO.class);
     }
 
     @Override
