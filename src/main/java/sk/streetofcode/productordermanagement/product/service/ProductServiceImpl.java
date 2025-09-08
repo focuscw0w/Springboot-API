@@ -39,15 +39,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Iterable<ProductDTO> getAllProducts() {
-        try {
-            List<ProductEntity> productEntities = this.productRepository.findAll();
+        List<ProductEntity> productEntities = this.productRepository.findAll();
 
-            return productEntities.stream()
+        return productEntities.stream()
                     .map(productEntity -> this.modelMapper.map(productEntity, ProductDTO.class))
                     .toList();
-        } catch (Exception e) {
-            throw new InternalErrorException("Failed to retrieve products " + e);
-        }
+
     }
 
     @Override
@@ -64,12 +61,8 @@ public class ProductServiceImpl implements ProductService {
                 request.getPrice()
         );
 
-        try {
-            ProductEntity savedProductEntity = productRepository.save(product);
-            return this.modelMapper.map(savedProductEntity, ProductDTO.class);
-        } catch (Exception e) {
-            throw new InternalErrorException("Failed to add product " + e);
-        }
+        ProductEntity savedProductEntity = productRepository.save(product);
+        return this.modelMapper.map(savedProductEntity, ProductDTO.class);
     }
 
     @Override
@@ -77,12 +70,8 @@ public class ProductServiceImpl implements ProductService {
         ProductEntity productEntity = this.getProductEntityById(id);
         productEntity.setAmount(productEntity.getAmount() + amount);
 
-        try {
-            ProductEntity savedProductEntity = productRepository.save(productEntity);
-            return new AmountDTO(savedProductEntity.getAmount());
-        } catch (Exception e) {
-            throw new InternalErrorException("Failed to add product amount " + e);
-        }
+        ProductEntity savedProductEntity = productRepository.save(productEntity);
+        return new AmountDTO(savedProductEntity.getAmount());
     }
 
     @Override
@@ -92,22 +81,14 @@ public class ProductServiceImpl implements ProductService {
         productEntity.setName(request.getName());
         productEntity.setDescription(request.getDescription());
 
-        try {
-            ProductEntity savedProductEntity = productRepository.save(productEntity);
-            return this.modelMapper.map(savedProductEntity, ProductDTO.class);
-        } catch (Exception e) {
-            throw new InternalErrorException("Failed to update product " + e);
-        }
+        ProductEntity savedProductEntity = productRepository.save(productEntity);
+        return this.modelMapper.map(savedProductEntity, ProductDTO.class);
     }
 
     @Override
     public void deleteProduct(long id) {
         ProductEntity product = this.getProductEntityById(id);
 
-        try {
-            productRepository.delete(product);
-        } catch (Exception e) {
-            throw new InternalErrorException("Failed to delete product " + e);
-        }
+        productRepository.delete(product);
     }
 }
