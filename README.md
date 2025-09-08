@@ -1,4 +1,4 @@
-# Springboot REST API
+# Shop Management API
 
 ### System Description
 The application server allows managing products and orders.
